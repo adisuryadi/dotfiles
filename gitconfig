@@ -1,0 +1,18 @@
+[color]
+	ui = true
+[user]
+	name = Adi Luhung Suryadi
+	email = adiluhung@gmail.com
+[gc]
+	autoDetach = false
+[core]
+	excludesfile = /Users/adisuryadi/.gitignore_global
+	autocrlf = input
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[branch]
+	autosetuprebase = always
