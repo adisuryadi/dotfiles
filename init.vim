@@ -8,26 +8,31 @@
 call plug#begin('~/.config/nvim/plugged')
 
 " -----------------------------------------------------------------------------
-" Making Vim look good
+" Making Vim looks good
 " -----------------------------------------------------------------------------
 Plug 'altercation/vim-colors-solarized'
+Plug 'mhinz/vim-janah'
 Plug 'mhartington/oceanic-next'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'Yggdroot/indentLine'
 Plug 'ntpeters/vim-better-whitespace'
+Plug 'mhinz/vim-startify'
 
 " -----------------------------------------------------------------------------
 " Vim as a programmer's text editor
 " -----------------------------------------------------------------------------
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+Plug 'othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'ryanoasis/vim-devicons' " add icon to nerdtree and airline
 Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 Plug 'mattn/emmet-vim'
 
 " Javascript
@@ -52,6 +57,7 @@ Plug 'elixir-lang/vim-elixir'
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'rizzatti/dash.vim'
+Plug 'easymotion/vim-easymotion'
 
 " -----------------------------------------------------------------------------
 " Other text editing features
@@ -59,6 +65,7 @@ Plug 'rizzatti/dash.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'ervandew/supertab'
 Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets' " Snippets are separated from the engine. 
 Plug 'jlanzarotta/bufexplorer'
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'tpope/vim-repeat'
@@ -100,7 +107,7 @@ set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
 " From old settings
 set backspace=start,indent,eol
 set autoindent
-set incsearch
+set incsearch " tells Vim to highlight the next match while you're still typing
 set laststatus=2
 set nobackup
 set nowritebackup
@@ -108,7 +115,7 @@ set nowritebackup
 " no bell no visual
 set noeb vb t_vb=
 
-colorscheme OceanicNext
+colorscheme janah
 
 " support true color
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
@@ -206,12 +213,38 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 " Advanced customization using autoload functions
 inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
 
+" Use Tab for everything (except UltiSnips)!
+autocmd FileType javascript let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+let g:UltiSnipsExpandTrigger="<C-j>"
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+
+" Easy motion
+" -----------------------------------------------------
+let g:EasyMotion_do_mapping = 0
+
+" Need one more keystroke, but on average, it may be more comfortable.
+" nmap s <Plug>(easymotion-overwin-f2)
+
+" Turn on case insensitive feature
+let g:EasyMotion_smartcase = 1
+
 " -----------------------------------------------------------------------------
 " Initialize deoplete
 " -----------------------------------------------------------------------------
 let g:deoplete#enable_at_startup = 1
+
+let g:deoplete#omni#functions = {}
+let g:deoplete#omni#functions.javascript = [
+  \ 'tern#Complete',
+  \ 'jspc#omni'
+\]
+
+let g:deoplete#sources = {}
+let g:deoplete#sources['javascript.jsx'] = ['file', 'ultisnips', 'ternjs']
+
+" Use deoplete.
 let g:tern_request_timeout = 1
-let g:tern_show_signature_in_pum = '0'  " This do disable full signature type on autocomplete
+let g:tern_show_signature_in_pum = '0'
 
 "Add extra filetypes
 let g:tern#filetypes = [
@@ -221,6 +254,12 @@ let g:tern#filetypes = [
       \ '...'
       \ ]
 
+" if also uses tern_for_vim
+" let g:tern#command = ['tern']
+" let g:tern#arguments = ['--persistent']
+
+
+set completeopt=longest,menuone,preview
 
 " vim-easy-align
 " Start interactive EasyAlign in visual mode (e.g. vipga)
@@ -317,6 +356,12 @@ autocmd VimEnter * command! -bang -nargs=* Ag
 " Autoclose preview window, after select
 " -----------------------------------------------------------------------------
 let g:SuperTabClosePreviewOnPopupClose = 1
+" set completeopt-=preview "completely disable preview entirely
+
+" -----------------------------------------------------------------------------
+" Startify + Tmux-resurrect Integration
+" -----------------------------------------------------------------------------
+let g:startify_session_persistence = 1
 
 " -----------------------------------------------------------------------------
 " Enable airline icons
@@ -374,3 +419,7 @@ let g:NERDSpaceDelims = 1
 " bufexporer
 let g:bufExplorerShowRelativePath=1  " Show relative paths.
 
+
+
+" DEBUG
+" call deoplete#enable_logging('DEBUG', 'deoplete.log')

@@ -254,3 +254,9 @@ bind-key a send-prefix
 
 bind-key C-a last-window
 
+set -g @continuum-restore 'on' # enable tmux-continuum auto restore when openning tmux
+
+# tpope/vim-obsession
+set -g @resurrect-strategy-nvim 'session' # automatically restore vim and neovim sessions
+
+set -g @resurrect-processes '"vim->vim +SLoad", "nvim->nvim +SLoad"' # restore last vim-startify
