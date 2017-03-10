@@ -23,9 +23,7 @@ Plug 'mhinz/vim-startify'
 " Vim as a programmer's text editor
 " -----------------------------------------------------------------------------
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
-Plug 'othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -57,22 +55,31 @@ Plug 'elixir-lang/vim-elixir'
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'rizzatti/dash.vim'
-Plug 'easymotion/vim-easymotion'
+" Plug 'easymotion/vim-easymotion'
+" Plug 'justinmk/vim-sneak'
 
 " -----------------------------------------------------------------------------
 " Other text editing features
 " -----------------------------------------------------------------------------
 Plug 'Raimondi/delimitMate'
 Plug 'ervandew/supertab'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets' " Snippets are separated from the engine. 
+" Plug 'SirVer/ultisnips'
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
 Plug 'jlanzarotta/bufexplorer'
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
+Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/nerdcommenter'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'terryma/vim-multiple-cursors'
+Plug 'wincent/scalpel'
+
+" UltiSnips snippets are separated from the engine. 
+Plug 'honza/vim-snippets'
+Plug 'epilande/vim-es2015-snippets'
+Plug 'epilande/vim-react-snippets'
 
 " -----------------------------------------------------------------------------
 " Misc
@@ -214,9 +221,45 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
 
 " Use Tab for everything (except UltiSnips)!
-autocmd FileType javascript let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
-let g:UltiSnipsExpandTrigger="<C-j>"
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" autocmd FileType javascript let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+" let g:UltiSnipsExpandTrigger="<C-j>"
+" inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+"
+
+" Neosnippet
+" Plugin key-mappings.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" SuperTab like snippets behavior.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+"imap <expr><TAB>
+" \ pumvisible() ? "\<C-n>" :
+" \ neosnippet#expandable_or_jumpable() ?
+" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" For conceal markers.
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
+endif
+
+" Tell Neosnippet about the other snippets
+let g:neosnippet#snippets_directory='~/.config/nvim/plugged/vim-snippets/snippets'
+
+" Enable snipMate compatibility feature.
+let g:neosnippet#enable_snipmate_compatibility = 1
+
+" Enable emmet jsx on .js files
+let g:user_emmet_settings = {
+\  'javascript' : {
+\      'extends' : 'jsx',
+\  },
+\}
 
 " Easy motion
 " -----------------------------------------------------
@@ -235,8 +278,7 @@ let g:deoplete#enable_at_startup = 1
 
 let g:deoplete#omni#functions = {}
 let g:deoplete#omni#functions.javascript = [
-  \ 'tern#Complete',
-  \ 'jspc#omni'
+  \ 'tern#Complete'
 \]
 
 let g:deoplete#sources = {}
@@ -245,6 +287,12 @@ let g:deoplete#sources['javascript.jsx'] = ['file', 'ultisnips', 'ternjs']
 " Use deoplete.
 let g:tern_request_timeout = 1
 let g:tern_show_signature_in_pum = '0'
+
+" move selection from top to bottom when press tab
+" use tab to forward cycle
+inoremap <silent><expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+" use tab to backward cycle
+inoremap <silent><expr><s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
 
 "Add extra filetypes
 let g:tern#filetypes = [

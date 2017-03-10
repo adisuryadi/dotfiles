@@ -11,6 +11,7 @@ call plug#begin('~/.vim/plugged')
 " Making Vim look good
 " -----------------------------------------------------------------------------
 Plug 'altercation/vim-colors-solarized'
+Plug 'mhinz/vim-janah'
 Plug 'mhartington/oceanic-next'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -113,7 +114,7 @@ set nowritebackup
 " no bell no visual
 set noeb vb t_vb=
 
-colorscheme OceanicNext
+colorscheme janah
 
 " support true color
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
@@ -214,6 +215,11 @@ let g:ycm_semantic_triggers =  {
   \ }
 let g:ycm_use_ultisnips_completer = 1
 
+" move selection from top to bottom when press tab
+" use tab to forward cycle
+" inoremap <silent><expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+" use tab to backward cycle
+" inoremap <silent><expr><s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
 
 " vim-easy-align
 " Start interactive EasyAlign in visual mode (e.g. vipga)
