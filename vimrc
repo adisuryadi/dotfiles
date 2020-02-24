@@ -33,25 +33,17 @@ Plug 'epilande/vim-react-snippets'
 Plug 'rizzatti/dash.vim'
 Plug 'wesQ3/vim-windowswap' " swap between window while maintaining layout
 Plug 'prettier/vim-prettier', { 'do': 'yarn install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
-" Plug 'svermeulen/vim-yoink'
-" Plug 'svermeulen/vim-subversive'
 
 " Languages pack for vim  
 " Plug 'sheerun/vim-polyglot'
 
 " Autocomplete
-" Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
-" Plug 'zxqfl/tabnine-vim'
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "
 "Javascript
 Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
 Plug 'MaxMEllon/vim-jsx-pretty'
-Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'othree/html5.vim'
-" Plug 'elzr/vim-json'
-" Plug 'styled-components/vim-styled-components'
 
 " CSS 3
 Plug 'hail2u/vim-css3-syntax'
@@ -59,16 +51,9 @@ Plug 'hail2u/vim-css3-syntax'
 " Typescript
 Plug 'leafgarland/typescript-vim'
 
-" Dart / Flutter
-Plug 'dart-lang/dart-vim-plugin'
-Plug 'thosakwe/vim-flutter'
-"
-"
-"PHP
-Plug 'tpope/vim-dispatch'
-Plug 'tpope/vim-projectionist'
-Plug 'noahfrederick/vim-composer'
-Plug 'noahfrederick/vim-laravel'
+" MDX files
+Plug 'jxnblk/vim-mdx-js'
+
 " -----------------------------------------------------------------------------
 " Other text editing features
 " -----------------------------------------------------------------------------
@@ -81,13 +66,11 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'adelarsq/vim-matchit'
 Plug 'dhruvasagar/vim-zoom'
-Plug 'junegunn/goyo.vim'
 
 " -----------------------------------------------------------------------------
 " Misc
 " -----------------------------------------------------------------------------
 Plug 'christoomey/vim-tmux-navigator' " navigate through vim window/tmux panes using same <C-h/j/k/l> keys
-Plug 'HendrikPetertje/vimify'
 Plug 'dyng/ctrlsf.vim'
 
 call plug#end()
@@ -127,7 +110,7 @@ set noswapfile
 set noeb vb t_vb=
 
 syntax on
-colorscheme sublimemonokai
+colorscheme vim-monokai-tasty
 
 " redraw issue after iTerm2 fullscreen + airline.vim
 set lazyredraw "draw issue after iTerm2 fullscreen + airline.vim
@@ -315,17 +298,6 @@ autocmd VimEnter * command! -bang -nargs=* Ag
 " Automatically update tag file upon save
 let g:autotagTagsFile='tags'
 
-" Status line (neovim)
-" function! s:fzf_statusline()
-"   " Override statusline as you like
-"   highlight fzf1 ctermfg=161 ctermbg=251
-"   highlight fzf2 ctermfg=23 ctermbg=251
-"   highlight fzf3 ctermfg=237 ctermbg=251
-"   setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
-" endfunction
-"
-" autocmd! User FzfStatusLine call <SID>fzf_statusline()
-
 " -----------------------------------------------------------------------------
 " Autoclose preview window, after select
 " -----------------------------------------------------------------------------
@@ -380,14 +352,6 @@ let g:airline_symbols.linenr = ''
 " -----------------------------------------------------------------------------
 " Lightline config
 " -----------------------------------------------------------------------------
-" let g:lightline = {
-      " \ 'component_function': {
-      " \   'filename': 'LightLineFilename'
-      " \ }
-      " \ }
-" function! LightLineFilename()
-  " return expand('%')
-" endfunction
 let g:lightline = {
       \ 'component_function': {
       \   'filename': 'LightlineFilename',
@@ -446,12 +410,6 @@ let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree"
 
 set encoding=utf-8
 
-" Spotify country
-let g:spotify_token = 'Mzg4MmYwZGU5ZDVmNDYxYmE0OThkZTFjOGI3MDYxMjk6NjllMjM0ZTM4MjIxNDE3MGE2NWIxOTAxZDhhZjQwNjA='
-let g:spotify_country_code = 'ID'
-
-" set clipboard=unnamed
-
 " disable conceal for hiding quote marks in JSON
 set conceallevel=0
 
@@ -503,37 +461,8 @@ endfunction
 nmap to :call OpenCurrentAsNewTab()<CR>
 nmap <C-W>z :call zoom#toggle()<CR>
 
-" vim yoink
-" nmap <c-n> <plug>(YoinkPostPasteSwapBack)
-" nmap <c-p> <plug>(YoinkPostPasteSwapForward)
-
-" nmap p <plug>(YoinkPaste_p)
-" nmap P <plug>(YoinkPaste_P)
-
-" vim Subversive
-" nmap <leader>s <plug>(SubversiveSubstituteRange)
-" xmap <leader>s <plug>(SubversiveSubstituteRange)
-
-" nmap <leader>ss <plug>(SubversiveSubstituteWordRange)
-
-" Subversive also provides a plug to replace visual mode paste to provide post paste swapping there as well:
-" xmap s <plug>(SubversiveSubstitute)
-" xmap p <plug>(SubversiveSubstitute)
-" xmap P <plug>(SubversiveSubstitute)
-
 " To disable scanning of all included files
 set complete-=i
-
-" Flutter
-" Some of these key choices were arbitrary;
-" it's just an example.
-nnoremap <leader>fa :FlutterRun<cr>
-nnoremap <leader>fq :FlutterQuit<cr>
-nnoremap <leader>fr :FlutterHotReload<cr>
-nnoremap <leader>fR :FlutterHotRestart<cr>
-nnoremap <leader>fD :FlutterVisualDebug<cr>
-let dart_highlight_types=v:true
-let dart_style_guide = 2
 
 " Dash doc
 nnoremap <leader>d :Dash<cr>
@@ -548,3 +477,12 @@ augroup END
 " Prettier
 let g:prettier#autoformat = 0
 autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
+
+" coc extensions
+let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-tsserver', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-yank', 'coc-prettier', 'coc-git', 'coc-stylelint']
+" == AUTOCMD ================================
+" by default .ts file are not identified as typescript and .tsx files are not
+" identified as typescript react file, so add following
+au BufNewFile,BufRead *.ts setlocal filetype=typescript
+au BufNewFile,BufRead *.tsx setlocal filetype=typescript.tsx
+" == AUTOCMD END ================================
