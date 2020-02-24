@@ -10,75 +10,85 @@ call plug#begin('~/.vim/plugged')
 " -----------------------------------------------------------------------------
 " Making Vim look good
 " -----------------------------------------------------------------------------
-Plug 'altercation/vim-colors-solarized'
-Plug 'mhinz/vim-janah'
-Plug 'mhartington/oceanic-next'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'Yggdroot/indentLine'
-Plug 'ntpeters/vim-better-whitespace'
+Plug 'veloce/vim-aldmeris'
+Plug 'patstockwell/vim-monokai-tasty'
+Plug 'ErichDonGubler/vim-sublime-monokai'
+Plug 'itchyny/lightline.vim'
 
 " -----------------------------------------------------------------------------
 " Vim as a programmer's text editor
 " -----------------------------------------------------------------------------
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
-Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'ryanoasis/vim-devicons' " add icon to nerdtree and airline
 Plug 'tpope/vim-fugitive'
 Plug 'mattn/emmet-vim'
+Plug 'craigemery/vim-autotag'
+Plug 'honza/vim-snippets'
+Plug 'epilande/vim-react-snippets'
+Plug 'rizzatti/dash.vim'
+Plug 'wesQ3/vim-windowswap' " swap between window while maintaining layout
+Plug 'prettier/vim-prettier', { 'do': 'yarn install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
+" Plug 'svermeulen/vim-yoink'
+" Plug 'svermeulen/vim-subversive'
 
-" Javascript
+" Languages pack for vim  
+" Plug 'sheerun/vim-polyglot'
+
+" Autocomplete
+" Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
+" Plug 'zxqfl/tabnine-vim'
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"
+"Javascript
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'othree/html5.vim'
+" Plug 'elzr/vim-json'
+" Plug 'styled-components/vim-styled-components'
 
+" CSS 3
+Plug 'hail2u/vim-css3-syntax'
+"
 " Typescript
-" Plug 'clausreinke/typescript-tools.vim', { 'do': 'npm install' }
-" Plug 'leafgarland/typescript-vim'
-" Plug 'Quramy/tsuquyomi'
-Plug 'Shougo/vimproc.vim', { 'do': 'make -f make_mac.mak'}
+Plug 'leafgarland/typescript-vim'
 
-" Markdown
-Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
-Plug 'junegunn/goyo.vim'
-" Plug 'junegunn/limelight.vim'
-
-" Languages
-Plug 'elixir-lang/vim-elixir'
-
-" -----------------------------------------------------------------------------
-" Browsing
-" -----------------------------------------------------------------------------
-Plug 'scrooloose/nerdtree'
-Plug 'jistr/vim-nerdtree-tabs'
-Plug 'rizzatti/dash.vim'
-
+" Dart / Flutter
+Plug 'dart-lang/dart-vim-plugin'
+Plug 'thosakwe/vim-flutter'
+"
+"
+"PHP
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-projectionist'
+Plug 'noahfrederick/vim-composer'
+Plug 'noahfrederick/vim-laravel'
 " -----------------------------------------------------------------------------
 " Other text editing features
 " -----------------------------------------------------------------------------
-Plug 'Raimondi/delimitMate'
-Plug 'ervandew/supertab'
-Plug 'SirVer/ultisnips'
+Plug 'jiangmiao/auto-pairs'
 Plug 'jlanzarotta/bufexplorer'
-Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-abolish'
 Plug 'scrooloose/nerdcommenter'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'terryma/vim-multiple-cursors'
+Plug 'adelarsq/vim-matchit'
+Plug 'dhruvasagar/vim-zoom'
+Plug 'junegunn/goyo.vim'
 
 " -----------------------------------------------------------------------------
 " Misc
 " -----------------------------------------------------------------------------
-" Currently seems to be broken in neovim :(
-Plug 'takac/vim-spotifysearch' " control spotify
+Plug 'christoomey/vim-tmux-navigator' " navigate through vim window/tmux panes using same <C-h/j/k/l> keys
+Plug 'HendrikPetertje/vimify'
+Plug 'dyng/ctrlsf.vim'
 
 call plug#end()
 
@@ -106,21 +116,18 @@ set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
 " From old settings
 set backspace=start,indent,eol
 set autoindent
+set hlsearch
 set incsearch
 set laststatus=2
 set nobackup
 set nowritebackup
+set noswapfile
 
 " no bell no visual
 set noeb vb t_vb=
 
-colorscheme janah
-
-" support true color
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-
-" different cursor on insert and normal mode (only work for iTerm2)
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+syntax on
+colorscheme sublimemonokai
 
 " redraw issue after iTerm2 fullscreen + airline.vim
 set lazyredraw "draw issue after iTerm2 fullscreen + airline.vim
@@ -140,6 +147,9 @@ map <Leader>1 <plug>NERDTreeTabsToggle<CR>
 " bufexplorer
 map <Leader>2 :ToggleBufExplorer<CR>
 
+" tagbar
+nmap <F8> :TagbarToggle<CR>
+
 " tab mappings
 map <leader>tt :tabnew<cr>
 map <leader>te :tabedit
@@ -150,6 +160,20 @@ map <leader>tp :tabprevious<cr>
 map <leader>tf :tabfirst<cr>
 map <leader>tl :tablast<cr>
 map <leader>tm :tabmove<cr>
+
+map <leader>q :q<cr>
+map <leader>w :write<cr>
+map <leader>s :split<cr>
+map <leader>v :vsplit<cr>
+
+map <leader>cp   :set clipboard=unnamed<cr>
+map <leader>cpu  :set clipboard=<cr>
+map <leader>cup  :set clipboard=<cr>
+map <leader>noclip  :set clipboard=<cr>
+map <leader>clipboard    :set clipboard=unnamed<cr>
+map <leader>noclipboard  :set clipboard=<cr>
+
+nnoremap <leader>h <Esc>:call ToggleHardMode()<CR>
 
 " previous buffer by [
 map ~ :bp<cr>
@@ -170,6 +194,15 @@ if $TERM =~ 'screen'
   nnoremap <Leader><C-a> <C-a>
 endif
 
+" Vim Tmux Navigator
+" navigate through vim window/tmux panes using same <C-h/j/k/l> keys
+" Workaround when <C-h> now working in nvim + iterm combination
+if has('nvim')
+    nmap <BS> :<C-u>TmuxNavigateLeft<CR>
+else
+    nmap <C-h> <C-w>h
+endif
+
 " FZF mappings
 " -----------------------------------------------------
 nnoremap <silent> <Leader><Leader> :Files<CR>
@@ -180,6 +213,9 @@ nnoremap <silent> <Leader>ag       :Ag <C-R><C-W><CR>
 nnoremap <silent> <Leader>AG       :Ag <C-R><C-A><CR>
 xnoremap <silent> <Leader>ag       y:Ag <C-R>"<CR>
 nnoremap <silent> <Leader>`        :Marks<CR>
+nnoremap <silent> <Leader>r        :BTags<CR>
+nnoremap <silent> <Leader>l        :BLines<CR>
+nnoremap <silent> <Leader>f        :BLines<CR>
 " nnoremap <silent> q: :History:<CR>
 " nnoremap <silent> q/ :History/<CR>"
 
@@ -197,36 +233,11 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 " Advanced customization using autoload functions
 inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
 
-" -----------------------------------------------------------------------------
-" YouCompleteMe
-" -----------------------------------------------------------------------------
-let g:ycm_semantic_triggers =  {
-  \   'c' : ['->', '.'],
-  \   'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
-  \             're!\[.*\]\s'],
-  \   'ocaml' : ['.', '#'],
-  \   'cpp,objcpp' : ['->', '.', '::'],
-  \   'perl' : ['->'],
-  \   'php' : ['->', '::'],
-  \   'cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
-  \   'ruby' : ['.', '::'],
-  \   'lua' : ['.', ':'],
-  \   'erlang' : [':'],
-  \ }
-let g:ycm_use_ultisnips_completer = 1
-
 " move selection from top to bottom when press tab
 " use tab to forward cycle
 " inoremap <silent><expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 " use tab to backward cycle
 " inoremap <silent><expr><s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
-
-" vim-easy-align
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
 
 " Disable IndentLines by default
 let g:indentLine_enabled = 0
@@ -301,6 +312,9 @@ autocmd VimEnter * command! -bang -nargs=* Ag
       \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
       \                 <bang>0)
 
+" Automatically update tag file upon save
+let g:autotagTagsFile='tags'
+
 " Status line (neovim)
 " function! s:fzf_statusline()
 "   " Override statusline as you like
@@ -316,6 +330,10 @@ autocmd VimEnter * command! -bang -nargs=* Ag
 " Autoclose preview window, after select
 " -----------------------------------------------------------------------------
 let g:SuperTabClosePreviewOnPopupClose = 1
+
+
+" Switch between dark and light mode by pressing F5
+" call togglebg#map("<F5>")
 
 " -----------------------------------------------------------------------------
 " Enable airline icons
@@ -358,14 +376,64 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 
+
 " -----------------------------------------------------------------------------
+" Lightline config
+" -----------------------------------------------------------------------------
+" let g:lightline = {
+      " \ 'component_function': {
+      " \   'filename': 'LightLineFilename'
+      " \ }
+      " \ }
+" function! LightLineFilename()
+  " return expand('%')
+" endfunction
+let g:lightline = {
+      \ 'component_function': {
+      \   'filename': 'LightlineFilename',
+      \ }
+      \ }
+
+function! LightlineFilename()
+  let root = fnamemodify(get(b:, 'git_dir'), ':h')
+  let path = expand('%:p')
+  if path[:len(root)-1] ==# root
+    return path[len(root)+1:]
+  endif
+  return expand('%')
+endfunction
+
+
+" -----------------------------------------------------------------------------
+" Python specific settings
+" -----------------------------------------------------------------------------
+let python_highlight_all=1
+
+" Python Indentation
+au BufNewFile,BufRead *.py
+    \set tabstop=4
+    \set softtabstop=4
+    \set shiftwidth=4
+    \set textwidth=79
+    \set expandtab
+    \set autoindent
+    \set fileformat=unix
+
+" Flagging Unnecessary Whitespace
+" au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+
+" -----------------------------------------------------------------------------
+" Find files
+" -----------------------------------------------------------------------------
+set path+=**
+
+" Display all matching files when we tab complete
+set wildmenu
+
 " Misc settings
 " -----------------------------------------------------------------------------
 " vim-jsx-pretty
 let g:vim_jsx_pretty_colorful_config = 1
-
-" spotify
-let g:spotify_country_code = 'ID'
 
 " nerdcommenter
 let g:NERDSpaceDelims = 1
@@ -373,3 +441,110 @@ let g:NERDSpaceDelims = 1
 " bufexporer
 let g:bufExplorerShowRelativePath=1  " Show relative paths.
 
+" Hide .pyc files
+let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree"
+
+set encoding=utf-8
+
+" Spotify country
+let g:spotify_token = 'Mzg4MmYwZGU5ZDVmNDYxYmE0OThkZTFjOGI3MDYxMjk6NjllMjM0ZTM4MjIxNDE3MGE2NWIxOTAxZDhhZjQwNjA='
+let g:spotify_country_code = 'ID'
+
+" set clipboard=unnamed
+
+" disable conceal for hiding quote marks in JSON
+set conceallevel=0
+
+set cursorline
+
+" https://gist.github.com/andyfowler/1195581
+if exists('$TMUX')
+  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+else
+  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+endif
+
+" Goyo
+function! s:goyo_enter()
+  if executable('tmux') && strlen($TMUX)
+    silent !tmux set status off
+    silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+  endif
+  set noshowmode
+  set noshowcmd
+  set scrolloff=999
+  " Limelight
+  " ...
+endfunction
+
+function! s:goyo_leave()
+  if executable('tmux') && strlen($TMUX)
+    silent !tmux set status on
+    silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+  endif
+  set showmode
+  set showcmd
+  set scrolloff=5
+  " Limelight!
+  " ...
+endfunction
+
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
+
+" http://vim.wikia.com/wiki/Maximize_window_and_return_to_previous_split_structure
+function! OpenCurrentAsNewTab()
+  let l:currentPos = getcurpos()
+  tabedit %
+  call setpos(".", l:currentPos)
+endfunction
+nmap to :call OpenCurrentAsNewTab()<CR>
+nmap <C-W>z :call zoom#toggle()<CR>
+
+" vim yoink
+" nmap <c-n> <plug>(YoinkPostPasteSwapBack)
+" nmap <c-p> <plug>(YoinkPostPasteSwapForward)
+
+" nmap p <plug>(YoinkPaste_p)
+" nmap P <plug>(YoinkPaste_P)
+
+" vim Subversive
+" nmap <leader>s <plug>(SubversiveSubstituteRange)
+" xmap <leader>s <plug>(SubversiveSubstituteRange)
+
+" nmap <leader>ss <plug>(SubversiveSubstituteWordRange)
+
+" Subversive also provides a plug to replace visual mode paste to provide post paste swapping there as well:
+" xmap s <plug>(SubversiveSubstitute)
+" xmap p <plug>(SubversiveSubstitute)
+" xmap P <plug>(SubversiveSubstitute)
+
+" To disable scanning of all included files
+set complete-=i
+
+" Flutter
+" Some of these key choices were arbitrary;
+" it's just an example.
+nnoremap <leader>fa :FlutterRun<cr>
+nnoremap <leader>fq :FlutterQuit<cr>
+nnoremap <leader>fr :FlutterHotReload<cr>
+nnoremap <leader>fR :FlutterHotRestart<cr>
+nnoremap <leader>fD :FlutterVisualDebug<cr>
+let dart_highlight_types=v:true
+let dart_style_guide = 2
+
+" Dash doc
+nnoremap <leader>d :Dash<cr>
+
+" CSS 3 Highlighting hack
+augroup VimCSS3Syntax
+  autocmd!
+
+  autocmd FileType css setlocal iskeyword+=-
+augroup END
+
+" Prettier
+let g:prettier#autoformat = 0
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
